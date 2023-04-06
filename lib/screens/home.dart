@@ -11,7 +11,7 @@ class _HomeState extends State<Home> {
   TextEditingController distanceController = TextEditingController();
   TextEditingController gasPriceController = TextEditingController();
   TextEditingController autonomyController = TextEditingController();
-
+  TextEditingController passengerController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   String result = 'R\$';
 
@@ -23,10 +23,11 @@ class _HomeState extends State<Home> {
     double distance = commaToDot(distanceController);
     double autonomy = commaToDot(autonomyController);
     double gasPrice = commaToDot(gasPriceController);
+    double passengers = commaToDot(passengerController);
 
     setState(() {
       result =
-          "R\$ ${((distance / autonomy) * gasPrice).toStringAsFixed(2).replaceAll('.', ',')}";
+          "R\$ ${(((distance / autonomy) * gasPrice)/passengers).toStringAsFixed(2).replaceAll('.', ',')}";
     });
   }
 
@@ -52,7 +53,7 @@ class _HomeState extends State<Home> {
             child: SizedBox(
               height: MediaQuery.of(context).orientation == Orientation.portrait
                   ? MediaQuery.of(context).size.height * 0.85
-                  : MediaQuery.of(context).size.height * 1.1,
+                  : MediaQuery.of(context).size.height * 1.5,
               width: MediaQuery.of(context).size.width * 0.90,
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -97,6 +98,19 @@ class _HomeState extends State<Home> {
                       controller: autonomyController,
                       decoration: const InputDecoration(
                         labelText: 'Autonomia (Km/litro)',
+                      ),
+                    ),
+                    TextFormField(
+                      keyboardType: TextInputType.number,
+                      validator: (String? value) {
+                        if (validation(value)) {
+                          return 'Insira um número válido';
+                        }
+                        return null;
+                      },
+                      controller: passengerController,
+                      decoration: const InputDecoration(
+                        labelText: 'Quantidade de pessoas',
                       ),
                     ),
                     Text.rich(
