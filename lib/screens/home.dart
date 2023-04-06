@@ -12,10 +12,11 @@ class _HomeState extends State<Home> {
   TextEditingController gasPriceController = TextEditingController();
   TextEditingController autonomyController = TextEditingController();
   TextEditingController passengerController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
-  String result = 'R\$';
 
-  double commaToDot(TextEditingController value) {
+  final _formKey = GlobalKey<FormState>(); //Chave global que vai realizar as validações no clique.
+  String result = 'R\$'; //Foi necessário criar essa variável para trocar o texto de estado.
+
+  double commaToDot(TextEditingController value) { // Função que troca a vírgula do input por ponto
     return double.parse(value.text.replaceAll(',', '.'));
   }
 
@@ -28,10 +29,10 @@ class _HomeState extends State<Home> {
     setState(() {
       result =
           "R\$ ${(((distance / autonomy) * gasPrice)/passengers).toStringAsFixed(2).replaceAll('.', ',')}";
-    });
+    }); //Substitui a String result pelo resultado da conta, formatando-a para duas casas decimais e com vírgula.
   }
 
-  bool validation(String? value) {
+  bool validation(String? value) { //Validação a ser realizada pela _formKey.
     if (value != null) {
         if (value.isEmpty || double.parse(value.replaceAll(',', '.')) < 0) {
           return true;
@@ -42,7 +43,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
+    return Form( //Para utlizar a GlobalKey<FormState> ela tem que estar no local mais alto da árvore.
       key: _formKey,
       child: Scaffold(
         appBar: AppBar(
@@ -52,7 +53,7 @@ class _HomeState extends State<Home> {
           child: SingleChildScrollView(
             child: SizedBox(
               height: MediaQuery.of(context).orientation == Orientation.portrait
-                  ? MediaQuery.of(context).size.height * 0.85
+                  ? MediaQuery.of(context).size.height * 0.85 //Operador ternário para alterar tamanho de acordo com orientação
                   : MediaQuery.of(context).size.height * 1.5,
               width: MediaQuery.of(context).size.width * 0.90,
               child: Padding(
@@ -138,8 +139,8 @@ class _HomeState extends State<Home> {
                             height: 45,
                             child: ElevatedButton(
                               onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  tripCost();
+                                if (_formKey.currentState!.validate()) { //Aqui ocorre a validação da chave
+                                  tripCost(); //Caso tudo esteja correto, muda o estado do texto result
                                 }
                               },
                               child: const Text(

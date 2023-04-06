@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_ex1/themes/theme_colors.dart';
 
-ThemeData MyTheme = ThemeData(
-  primaryColor: ThemeColors.primaryColor,
+ThemeData myTheme = ThemeData(
+  primaryColor: ThemeColors.primaryColor, //Se setou primaryColor também tem que setar primarySwatch
   primarySwatch: ThemeColors.primaryColor,
   appBarTheme: const AppBarTheme(
     foregroundColor: Colors.white,
@@ -18,7 +18,7 @@ ThemeData MyTheme = ThemeData(
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
-      backgroundColor: MaterialStateColor.resolveWith(
+      backgroundColor: MaterialStateColor.resolveWith( //Não consegui fazer de outra forma para usar MaterialAccentColor.
         (states) => ThemeColors.buttonColor,
       ),
     ),
