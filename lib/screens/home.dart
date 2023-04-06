@@ -32,12 +32,9 @@ class _HomeState extends State<Home> {
 
   bool validation(String? value) {
     if (value != null) {
-      if (value.contains(',')) {
-        double dotValue = double.parse(value.replaceAll(',', '.'));
-        if (value.isEmpty || dotValue < 0) {
+        if (value.isEmpty || double.parse(value.replaceAll(',', '.')) < 0) {
           return true;
         }
-      }
     }
     return false;
   }
